@@ -64,6 +64,7 @@ const login = asyncHandler(async(req,res)=>{
         console.log(`   ${res.statusCode}: JWT Token generated Successfully\n`);
     }else{
         res.status(401);
+        console.log(`   ${res.statusCode}: Email or password is not valid\n`);
         throw new Error("Email or password is not valid.")
     }
 });
