@@ -68,7 +68,7 @@ class User {
             })
                 .then(res => res.json())
                 .then(data => {
-                    if(!data.name){
+                    if (!data.name) {
                         document.getElementById("status").innerHTML = `<h3>${data.message}</h3>`
                         return
                     }
@@ -90,7 +90,11 @@ class User {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            result = await result.json();
+            result = await result.json()
+            if(result.toString().length==0){
+                document.getElementById("status").innerHTML = `<h3>No data is added yet</h3>`
+                return
+            }
             document.getElementById("res-div").innerHTML = `<h4>Data:</h4>`
             document.getElementById("tablehead").innerHTML = `
             <tr>
@@ -117,19 +121,18 @@ class User {
 
         // console.log(token)
     }
-
     async readId() {
         document.getElementById("status").innerHTML = `<h3>Processing...</h3>`
         const registered_user_id = document.getElementById("userWindow-1-user-id").value
         let result = await fetch(`http://localhost:3000/api/contacts/${registered_user_id}`, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            });
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
         result = await result.json()
-        if(!result.name){
-            document.getElementById("status").innerHTML = `<h3>Contact not found !!!</h3>`
+        if (!result.name) {
+            document.getElementById("status").innerHTML = `<h3>${result.message}</h3>`
             return
         }
         // console.log(result)
@@ -141,7 +144,7 @@ class User {
                 <th>Phone </th>
                 <th>User ID </th>
             </tr>`
-            document.getElementById("userData").innerHTML = `
+        document.getElementById("userData").innerHTML = `
             <tr>
                 <td>${result._id}</td>
                 <td>${result.name}</td>
@@ -158,18 +161,18 @@ class User {
             const name = document.getElementById("userWindow-1-name").value
             const email = document.getElementById("userWindow-1-email").value
             const phone = document.getElementById("userWindow-1-phone").value
-            if(!name && !email && !phone){
+            if (!name && !email && !phone) {
                 document.getElementById("status").innerHTML = `<h3>Please provide some data to update !!!</h3>`
                 return
             }
             const data = {}
-            if(name){
+            if (name) {
                 data.name = name
             }
-            if(email){
+            if (email) {
                 data.email = email
             }
-            if(phone){
+            if (phone) {
                 data.phone = phone
             }
             let result = await fetch(`http://localhost:3000/api/contacts/${id}`, {
@@ -180,8 +183,11 @@ class User {
                 },
                 body: JSON.stringify(data)
             });
-            result = await result.json();
-
+            result = await result.json()
+            if(result.message){
+                document.getElementById("status").innerHTML = `<h3>${result.message}</h3>`
+                return
+            }
             document.getElementById("res-div").innerHTML = `<h4>Updated data:</h4>`
             document.getElementById("tablehead").innerHTML = `
             
@@ -211,14 +217,14 @@ class User {
         document.getElementById("status").innerHTML = `<h3>Processing...</h3>`
         const registered_user_id = document.getElementById("userWindow-1-user-id").value
         let result = await fetch(`http://localhost:3000/api/contacts/${registered_user_id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            });
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
         result = await result.json()
-        if(!result.name){
-            document.getElementById("status").innerHTML = `<h3>Contact not found!!!</h3><h5>${result.message}</h5>`
+        if (result.message) {
+            document.getElementById("status").innerHTML = `<h3>${result.message}</h3>`
             return
         }
         // console.log(result)
@@ -348,7 +354,7 @@ function updateWindow1() {
         `
 }
 function updateWindow2() {
-    const id=document.getElementById("userWindow-1-user-id").value
+    const id = document.getElementById("userWindow-1-user-id").value
     document.getElementById("userWindow-1").innerHTML = `
         <div>
             <form id="updateForm2" method="post">
@@ -370,7 +376,48 @@ function deleteWindow() {
         </div>
         `
 }
+function registerWindow() {
+    document.getElementById("userWindow").innerHTML = `
+    <div>
+        <form id="registerForm" method="post">
+            <input type="text" name="username" id="username" placeholder="Enter the username"><br>
+            <input type="text" name="email" id="email" placeholder="Enter the Email"><br>
+            <input type="text" name="password" id="password" placeholder="Enter the password"><br>
+            <button type="submit" onclick="register()">Register</button>
+        </form>
+    </div>
+    `
+}
+function register() {
+    document.getElementById("status").innerHTML = `<h3>Processing...</h3>`
+    const form = document.getElementById("registerForm")
+    form.addEventListener("submit", function (e) {
+        e.preventDefault()
 
+        const formdata = new FormData(form);
+        const data = Object.fromEntries(formdata);
+        // console.log(data);
+        fetch("http://localhost:3000/api/users/register", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).then(res=>res.json())
+        .then(data=>{
+            if(data.message){
+                document.getElementById("status").innerHTML = `<h3>${data.message}</h3>`
+                console.log(data)
+                return
+            }
+            document.getElementById("status").innerHTML = `<h3>Completed</h3>`
+            
+        })
+        .catch(err=>{
+            console.log(err)
+            document.getElementById("status").innerHTML = `<h3>Failed</h3>`
+
+        })
+    })
+}
 
 const user = new User()
 
