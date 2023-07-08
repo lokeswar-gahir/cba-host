@@ -237,6 +237,7 @@ function reset() {
     document.getElementById("res-div").innerHTML = "";
     document.getElementById("tablehead").innerHTML = "";
     document.getElementById("userData").innerHTML = "";
+    
 }
 
 async function allusers() {
