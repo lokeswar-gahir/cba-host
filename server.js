@@ -10,7 +10,7 @@ connectDb();
 const cors = require("cors");
 app.use(cors());
 
-const port  = process.env.PORT || 3000;
+const port  = process.env.PORT || 5000;
 // const port  = 3001;
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -28,5 +28,13 @@ app.listen(port,()=>{
 
 app.get('/',(req,res)=>{
     console.log("On Homepage.");
-    res.send("Home page.");
+    res.sendFile(__dirname + '/frontend/hello.html',(err)=>{
+        console.log(err)
+    });
+});
+app.get('/hello.js',(req,res)=>{
+    console.log("sending hello.js");
+    res.sendFile(__dirname + '/frontend/hello.js',(err)=>{
+        console.log(err)
+    });
 });
