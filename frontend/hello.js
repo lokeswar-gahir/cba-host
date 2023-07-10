@@ -26,7 +26,7 @@ class User {
             const formdata = new FormData(form);
             const data = Object.fromEntries(formdata);
             // console.log(data);
-            fetch("http://localhost:3000/api/users/login", {
+            fetch("https://cba-varh.onrender.com/api/users/login", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -61,7 +61,7 @@ class User {
             const formdata = new FormData(form);
             const data = Object.fromEntries(formdata);
             // console.log(data);
-            fetch("http://localhost:3000/api/contacts", {
+            fetch("https://cba-varh.onrender.com/api/contacts", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify(data)
@@ -84,7 +84,7 @@ class User {
     async read() {
         try {
             document.getElementById("status").innerHTML = `<h3>Processing</h3>`
-            let result = await fetch("http://localhost:3000/api/contacts", {
+            let result = await fetch("https://cba-varh.onrender.com/api/contacts", {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -124,7 +124,7 @@ class User {
     async readId() {
         document.getElementById("status").innerHTML = `<h3>Processing...</h3>`
         const registered_user_id = document.getElementById("userWindow-1-user-id").value
-        let result = await fetch(`http://localhost:3000/api/contacts/${registered_user_id}`, {
+        let result = await fetch(`https://cba-varh.onrender.com/api/contacts/${registered_user_id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -175,7 +175,7 @@ class User {
             if (phone) {
                 data.phone = phone
             }
-            let result = await fetch(`http://localhost:3000/api/contacts/${id}`, {
+            let result = await fetch(`https://cba-varh.onrender.com/api/contacts/${id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -216,7 +216,7 @@ class User {
     async delete() {
         document.getElementById("status").innerHTML = `<h3>Processing...</h3>`
         const registered_user_id = document.getElementById("userWindow-1-user-id").value
-        let result = await fetch(`http://localhost:3000/api/contacts/${registered_user_id}`, {
+        let result = await fetch(`https://cba-varh.onrender.com/api/contacts/${registered_user_id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -243,7 +243,7 @@ function reset() {
 async function allusers() {
     try {
         document.getElementById("status").innerHTML = `<h3>Processing</h3>`
-        let result = await fetch("http://localhost:3000/api/users/all")
+        let result = await fetch("https://cba-varh.onrender.com/api/users/all")
         result = await result.json();
         // console.log(result);
         document.getElementById("tablehead").innerHTML = `
@@ -300,7 +300,7 @@ function getTokenOuter() {
         const email = document.getElementById("email").value
         const password = document.getElementById("password").value
 
-        fetch("http://localhost:3000/api/users/login", {
+        fetch("https://cba-varh.onrender.com/api/users/login", {
             method: 'POST',
             body: JSON.stringify({ email: email, password: password }),
             headers: {
@@ -398,7 +398,7 @@ function register() {
         const formdata = new FormData(form);
         const data = Object.fromEntries(formdata);
         // console.log(data);
-        fetch("http://localhost:3000/api/users/register", {
+        fetch("https://cba-varh.onrender.com/api/users/register", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
