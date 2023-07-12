@@ -141,7 +141,7 @@ class User {
             return
         }
         // console.log(result)
-        document.getElementById("tablehead").innerHTML = `
+        document.getElementById("tablehead").innerHTML = ` 
             <tr class="table-light">
                 <th>ID </th>
                 <th>Username </th>
