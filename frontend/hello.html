@@ -12,22 +12,23 @@
 
     </script>
 </head>
-<body>
-    <h1>Hello, world!</h1>
-    <div id="status"></div>
-    <a href="http://localhost:3000/api/users/all">click me</a>
-    <button type="button" class="btn-login" onclick="registerWindow()">Register</button>
-    <button type="button" class="btn-login" onclick="allusers()">Users</button>
-    <button type="button" class="btn-login" onclick="reset()">Clear</button>
-    <button type="button" class="btn-login" onclick="loginWindow()">Login</button>
-    <!-- <button type="button" class="btn-login" onclick="read()">Test</button> -->
-
-    <div id="userWindow"></div>
-    <div id="res-div"></div>
-    <table border="1">
+<body class="container">
+    <h1 class="text-center">Hello, world!</h1>
+    <div id="status">If you are not registered yet, then <a href="#" onclick="registerWindow()">Register Here</a></div>
+    <div class="mb-3">
+    <button type="button" class="btn btn-primary" onclick="registerWindow()">Register</button>
+    <button type="button" class="btn btn-primary" onclick="allusers()">Users</button>
+    <button type="button" class="btn btn-primary" onclick="reset()">Clear</button>
+    <button type="button" class="btn btn-primary" onclick="loginWindow()">Login</button>
+    </div>
+    <div id="userWindow" class="mb-3"></div>
+    <div id="res-div" class="mb-3"></div>
+    <div class="table-responsive">
+    <table border="1" class="table table-hover">
         <thead id="tablehead"></thead>
         <tbody id="userData"></tbody>
     </table>
+    </div>
     <div id="tr"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
